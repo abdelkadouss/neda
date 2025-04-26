@@ -1,0 +1,6 @@
+[api]
+url = "https://api.aladhan.com/v1"
+
+[adhan]
+enabled = true
+file = "adhan.mp3"

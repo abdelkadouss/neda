@@ -26,7 +26,7 @@ pub fn get_config() -> Config {
 
     let config_path = config_dir_path + "/config.toml";
 
-    const DEFAULT_CONFIG: &str = include_str!("../assets/templetes/config.toml");
+    const DEFAULT_CONFIG: &str = include_str!("../../assets/templetes/config.toml");
 
     if !Path::new(&config_path).exists() {
         fs::write(&config_path, DEFAULT_CONFIG).unwrap();

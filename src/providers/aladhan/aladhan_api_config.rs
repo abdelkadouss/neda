@@ -1,8 +1,8 @@
 pub struct AladhanEndpoint {
     pub today: String,
-    pub date: String,
+    // pub date: String, TODO:
     pub month: String,
-    pub year: String,
+    // pub year: String, TODO:
 }
 
 pub struct AladhanApiConfig {
@@ -14,9 +14,9 @@ pub struct AladhanApiConfig {
 pub fn get_aladhan_api_config() -> AladhanApiConfig {
     let aladhan_api_and_endpoint = AladhanEndpoint {
         today: String::from("timingsByCity"),
-        date: String::from("timingsByCity"),
+        // date: String::from("timingsByCity"),
         month: String::from("calendarByCity/from/{from}/to/{to}"),
-        year: String::from("calendarByCity/from/{start}/to/{end}"),
+        // year: String::from("calendarByCity/from/{start}/to/{end}"),
     };
 
     AladhanApiConfig {

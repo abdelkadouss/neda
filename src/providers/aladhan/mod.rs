@@ -141,7 +141,6 @@ impl Provider for AladhanProvider {
                     config.city,
                     config.country
                 );
-                println!("{}", url);
 
                 fn parse_day_times(
                     day_times: &Value,
