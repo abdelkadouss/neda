@@ -1,5 +1,8 @@
 <div align="center"> بسم الله الرحمن الرحيم </div> 
 
+# WORNING
+🚧 this app is still in development and is not ready for use yet. 🚧
+
 # Neda
 
 Neda-cli lightweight cli app for prayer times (show, notify, adhan) and is a part (implementation) of [Neda](https://github.com/abdelkadess/neda) project a free and open source cross platform - insha'Allah - incha'Allah. salat (prayers) times app and library.
@@ -34,7 +37,7 @@ you have to add this to your start at login list to start the adhan and notifica
 
 #### Linux users
 
-if you use a destro that use systemd do the use the `examples/install_neda_service_linux_systemd_user.sh` script to add the neda service.
+if you use a destro that use systemd do the use the `scripts/install_neda_service_linux_systemd_user.sh` script to add the neda service.
 
 ```sh
 sh install_neda_service_linux_systemd_user.sh
@@ -49,7 +52,7 @@ you should see:
 
 #### OSX (MacOS) users
 
-use the secript example under the examples folder under name `examples/install_neda_service_osx_user.sh` and run it.
+use the secript example under the scripts folder under name `scripts/install_neda_service_osx_user.sh` and run it.
 ```sh
 sh install_neda_service_osx_user.sh
 ```
