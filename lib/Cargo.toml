@@ -1,0 +1,23 @@
+[package]
+name = "neda-lib"
+version = "0.1.0"
+edition = "2024"
+authors = ["abdelkadous <development.abdelkadous@gmail.com>"]
+description = "a siple adhan library with client written in rust"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/abdelkadouss/neda"
+keywords = ["islam", "prayer", "adhan", "salat"]
+categories = ["command-line-utilities", "multimedia::audio"]
+
+[features]
+default = ["aladhan-provider", "sqlite-storage", "client"]
+aladhan-provider = ["dep:reqwest", "dep:serde_json"]
+sqlite-storage = ["dep:rusqlite"]
+client = ["dep:gtoml"]
+
+[dependencies]
+chrono = { workspace = true }
+reqwest = { workspace = true, optional = true }
+serde_json = { workspace = true, optional = true }
+gtoml = { workspace = true, optional = true }
+rusqlite = { workspace = true, optional = true }
