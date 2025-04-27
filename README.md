@@ -2,7 +2,7 @@
 
 # Neda
 
-Neda is a Rust library for getting prayer times from multiple providers.
+Neda is an open source app Rust library for getting prayer times from multiple providers.
 is good to make you own prayer times app really quickly and easily incha'Allah.
 it is a part of [Neda](https://github.com/abdelkadess/neda) project a free and open source cross platform - insha'Allah - salat (prayers) times app and library.
 
@@ -27,10 +27,10 @@ neda = "0.1"
 
 ### Features
 
-default = ["aladhan-provider", "sqlite-storage"]
-aladhan-provider # default api provider.
-sqlite-storage # storage module, a sqlite db for offline access.
-client # utilities to help you make your own neda client (including a config_reader and some stuff).
+- default = ["aladhan-provider", "sqlite-storage"].
+- aladhan-provider # default api provider.
+- sqlite-storage # storage module, a sqlite db for offline access.
+- client # utilities to help you make your own neda client (including a config_reader and some stuff).
 
 
 ## Usage

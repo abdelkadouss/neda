@@ -34,21 +34,34 @@ you have to add this to your start at login list to start the adhan and notifica
 
 #### Linux users
 
-if you use a destro that use systemd do the next:
+if you use a destro that use systemd do the use the `examples/install_neda_service_linux_systemd_user.sh` script to add the neda service.
 
 ```sh
-sudo systemctl --user enable --now neda-adhan.service
-sudo systemctl --user enable --now neda-notify.service
+sh install_neda_service_linux_systemd_user.sh
+```
+
+you should see:
+
+```sh
+# =>✅ Neda service installed and started successfully!
+# =>Check status with: systemctl --user status neda.service
 ```
 
 #### OSX (MacOS) users
 
-use the secript example examples folder under name `neda-osx-start-at-login.sh` and run it.
+use the secript example under the examples folder under name `examples/install_neda_service_osx_user.sh` and run it.
 ```sh
-sh neda-osx-start-at-login.sh
+sh install_neda_service_osx_user.sh
 ```
 
-you should see a notification pop up that tell you neda added to the ligin items or some thing like that incha'Allah.
+you should see:
+
+```sh
+# =>✅ Neda service installed and started successfully!
+# =>Check status with: systemctl --user status neda.service
+```
+
+and you should see a notification pop up that tell you neda added to the ligin items or some thing like that incha'Allah.
 
 ### License
 you can use it under the terms of either the [MIT](https://choosealicense.com/licenses/mit/) license or the [Apache 2.0](https://choosealicense.com/licenses/apache-2.0/) license.

@@ -17,10 +17,10 @@ neda = "0.1"
 
 ### Features
 
-default = ["aladhan-provider", "sqlite-storage"]
-aladhan-provider # default api provider.
-sqlite-storage # storage module, a sqlite db for offline access.
-client # utilities to help you make your own neda client (including a config_reader and some stuff).
+- default = ["aladhan-provider", "sqlite-storage"].
+- aladhan-provider # default api provider.
+- sqlite-storage # storage module, a sqlite db for offline access.
+- client # utilities to help you make your own neda client (including a config_reader and some stuff).
 
 
 ## Usage
