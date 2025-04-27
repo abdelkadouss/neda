@@ -31,15 +31,6 @@ impl DB {
         Ok(db)
     }
 
-    fn make_table(&mut self, table: &Table) -> Result<()> {
-        let sql = format!(
-            "CREATE TABLE IF NOT EXISTS {} ({})",
-            table.name, table.schema
-        );
-        self.conn.execute(&sql, [])?;
-        Ok(())
-    }
-
     fn make_schema(&mut self) -> Result<()> {
         for table in &self.tables {
             let sql = format!(

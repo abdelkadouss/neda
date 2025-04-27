@@ -67,7 +67,7 @@ impl PrayersTimesDB {
 
         // Prepare and execute the query with parameters
         let mut stmt = self.db.conn.prepare(sql)?;
-        let mut rows = stmt.query(&[&date_str as &dyn rusqlite::ToSql])?;
+        let mut rows = stmt.query([&date_str as &dyn rusqlite::ToSql])?;
 
         // Get the first row (should be only one since date is the primary key)
         if let Some(row) = rows.next()? {
@@ -123,7 +123,7 @@ impl PrayersTimesDB {
 
         // Execute the query
         let mut stmt = self.db.conn.prepare(&sql)?;
-        let mut rows = stmt.query(&[&date_str as &dyn rusqlite::ToSql])?;
+        let mut rows = stmt.query([&date_str as &dyn rusqlite::ToSql])?;
 
         // Get the first row
         if let Some(row) = rows.next()? {

@@ -25,9 +25,9 @@ build:
 test *opt:
   #!/usr/bin/env nu
   if "{{opt}}" == "--watch" {
-    watchexec -w lib -w cli -w Cargo.toml cargo test --workspace
+    watchexec -w lib -w cli -w Cargo.toml nu ./scripts/run_tests_and_examples.nu;
   } else {
-    cargo test --workspace
+    nu ./scripts/run_tests_and_examples.nu;
   }
 
 # watch crates the files changes and run the crate (default: neda-cli)

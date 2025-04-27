@@ -1,5 +1,4 @@
-use std::path::Path;
-
+use chrono::Datelike;
 use neda_lib::{
     core::{config::Config, prayers_times::Prayers, providers::Provider},
     providers::aladhan::AladhanProvider,
@@ -7,12 +6,13 @@ use neda_lib::{
 };
 
 fn main() {
+    let today = chrono::Local::now();
     let config = Config::new(
-        2025,
-        4,
-        25,
-        "ElOued".to_string(),
-        "DZ".to_string(),
+        today.year(),
+        today.month(),
+        today.day(),
+        "makah".to_string(),
+        "SAU".to_string(),
         neda_lib::core::config::GetType::Month,
     );
     let aladhan = AladhanProvider::new(config.clone());
@@ -22,18 +22,19 @@ fn main() {
     let db = PrayersTimesDB::new("lib/local.db".to_string());
     match db {
         Ok(mut db) => {
-            match Path::new("lib/local.db").exists() {
-                true => {
-                    println!("local.db exists, not pushing to db");
-                    let day_salawat = db.get_day_times(&prayers_times.from).unwrap();
-                    let fjer = db.get_prayer_time(Prayers::Fajr, &prayers_times.from);
-                    println!("fjer is: {:#?}", fjer);
-                    println!("day salawat is: {:#?}", day_salawat);
+            match db.push(&prayers_times) {
+                Ok(_) => {
+                    println!("ignore pushing to the db");
                 }
                 _ => {
-                    db.push(&prayers_times).unwrap();
+                    println!("pushing to the db");
                 }
             };
+
+            let day_salawat = db.get_day_times(&prayers_times.from).unwrap();
+            let fjer = db.get_prayer_time(Prayers::Fajr, &prayers_times.from);
+            println!("fjer is: {:#?}", fjer);
+            println!("day salawat is: {:#?}", day_salawat);
         }
         Err(e) => {
             println!("Error: {:#?}", e);
