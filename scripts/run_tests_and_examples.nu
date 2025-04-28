@@ -10,7 +10,7 @@ def main [] {
   for crate in $crates {
     let examples_dir = ([$crate, "examples"] | path join);
     if ($examples_dir | path exists) {
-      for file in (ls $examples_dir | get name) {
+      for file in (ls $examples_dir | where type == "file" | get name) {
         let example = ($file | path parse | get stem);
         print $"(ansi purple_bold)# Running the example (ansi u)'($example)' ...(ansi reset)";
         cargo run --example $example --keep-going;

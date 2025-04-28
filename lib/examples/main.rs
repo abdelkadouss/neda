@@ -2,6 +2,7 @@ use chrono::Datelike;
 use neda_lib::{
     core::{config::Config, prayers_times::Prayers, providers::Provider},
     providers::aladhan::AladhanProvider,
+    sound::Adhan,
     storage::prayers_times_db::PrayersTimesDB,
 };
 
@@ -11,7 +12,7 @@ fn main() {
         today.year(),
         today.month(),
         today.day(),
-        "makah".to_string(),
+        "mecca".to_string(),
         "SAU".to_string(),
         neda_lib::core::config::GetType::Month,
     );
@@ -35,6 +36,9 @@ fn main() {
             let fjer = db.get_prayer_time(Prayers::Fajr, &prayers_times.from);
             println!("fjer is: {:#?}", fjer);
             println!("day salawat is: {:#?}", day_salawat);
+            // let's run the adhan now
+            let adhan = Adhan::new("lib/examples/audio/اذان-احمد-النفيس.mp3".to_string());
+            adhan.play();
         }
         Err(e) => {
             println!("Error: {:#?}", e);

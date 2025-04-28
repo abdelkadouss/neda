@@ -133,4 +133,11 @@ impl PrayersTimesDB {
             Err(rusqlite::Error::QueryReturnedNoRows)
         }
     }
+
+    pub fn overwrite(&mut self, prayers_times: &PrayersTimesStuck) -> Result<(), rusqlite::Error> {
+        let sql = "DELETE FROM prayers_times";
+        self.db.conn.execute(sql, [])?;
+        self.push(prayers_times)?;
+        Ok(())
+    }
 }

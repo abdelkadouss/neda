@@ -10,3 +10,6 @@ keywords = ["islam", "prayer", "adhan", "salat"]
 categories = ["command-line-utilities", "multimedia::audio"]
 
 [dependencies]
+neda-lib = { path = "../lib" }
+clap = { workspace = true }
+chrono = { workspace = true }

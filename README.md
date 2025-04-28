@@ -50,7 +50,7 @@ fn main() {
         today.year(),
         today.month(),
         today.day(),
-        "makah".to_string(),
+        "mecca".to_string(),
         "SAU".to_string(),
         neda_lib::core::config::GetType::Month,
     );

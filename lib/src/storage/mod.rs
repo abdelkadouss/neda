@@ -2,6 +2,8 @@ use rusqlite::{Connection, Result};
 
 pub mod prayers_times_db;
 
+pub use rusqlite::Error;
+
 struct DB {
     pub conn: Connection,
     pub db_path: String,

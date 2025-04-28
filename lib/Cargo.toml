@@ -10,10 +10,11 @@ keywords = ["islam", "prayer", "adhan", "salat"]
 categories = ["command-line-utilities", "multimedia::audio"]
 
 [features]
-default = ["aladhan-provider", "sqlite-storage", "client"]
+default = ["aladhan-provider", "sqlite-storage", "client", "sound"]
 aladhan-provider = ["dep:reqwest", "dep:serde_json"]
 sqlite-storage = ["dep:rusqlite"]
 client = ["dep:gtoml"]
+sound = ["dep:rodio"]
 
 [dependencies]
 chrono = { workspace = true }
@@ -21,3 +22,4 @@ reqwest = { workspace = true, optional = true }
 serde_json = { workspace = true, optional = true }
 gtoml = { workspace = true, optional = true }
 rusqlite = { workspace = true, optional = true }
+rodio = { workspace = true, optional = true }

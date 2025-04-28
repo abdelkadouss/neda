@@ -9,12 +9,12 @@ _default:
   @just --list
 
 # run bins (cli, lib)
-run bin:
+run bin *args:
   #!/usr/bin/env nu
   if "{{bin}}" == "cli" {
-    cargo run --bin neda-cli
+    cargo run --bin neda-cli {{args}}
   } else {
-    cargo run --bin {{bin}}
+    cargo run --bin {{bin}} {{args}}
   }
 
 # build app crates
@@ -25,16 +25,16 @@ build:
 test *opt:
   #!/usr/bin/env nu
   if "{{opt}}" == "--watch" {
-    watchexec -w lib -w cli -w Cargo.toml nu ./scripts/run_tests_and_examples.nu;
+    watchexec -w lib -w cli -w Cargo.toml -r nu ./scripts/run_tests_and_examples.nu;
   } else {
     nu ./scripts/run_tests_and_examples.nu;
   }
 
 # watch crates the files changes and run the crate (default: neda-cli)
-watch crate = "neda-cli":
+watch crate = "neda-cli" *args:
   #!/usr/bin/env nu
   if "{{crate}}" == "cli" {
-    watchexec -w cli -w Cargo.toml just run neda-cli
+    watchexec -w cli -w Cargo.toml just run neda-cli {{args}}
   } else {
-    watchexec -w cli -w lib -w Cargo.toml just run {{crate}}
+    watchexec -w cli -w lib -w Cargo.toml just run {{crate}} {{args}}
   }

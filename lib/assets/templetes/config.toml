@@ -1,6 +1,10 @@
 [api]
-url = "https://api.aladhan.com/v1"
+city = "mecca"
+country = "SAU"
 
 [adhan]
 enabled = true
 file = "adhan.mp3"
+
+[db]
+path = "neda_local.db"
