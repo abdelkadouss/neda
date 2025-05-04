@@ -19,7 +19,7 @@ After=network.target
 
 [Service]
 Type=simple
-ExecStart=$NEDA_CLI start
+ExecStart=$NEDA_CLI
 Restart=on-failure
 RestartSec=5s
 

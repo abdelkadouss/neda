@@ -140,4 +140,61 @@ impl PrayersTimesDB {
         self.push(prayers_times)?;
         Ok(())
     }
+
+    pub fn get_month_times(&self, date: &NaiveDate) -> Result<PrayersTimesStuck, rusqlite::Error> {
+        // Calculate the end date (30 days after the start date)
+        let date_to = date.checked_add_days(chrono::Days::new(30)).unwrap();
+
+        // Format dates for the query
+        let date_from_str = date.format("%Y-%m-%d").to_string();
+        let date_to_str = date_to.format("%Y-%m-%d").to_string();
+
+        // Prepare the query to get all prayer times between the dates
+        let sql = "SELECT date, fajr, dhuhr, asr, maghrib, isha FROM prayers_times WHERE date BETWEEN ? AND ? ORDER BY date";
+
+        let mut stmt = self.db.conn.prepare(sql)?;
+        let mut rows = stmt.query([&date_from_str, &date_to_str])?;
+
+        let mut prayers_times = Vec::new();
+        let mut current_date = *date;
+
+        // Helper function to parse time strings
+        let parse_time = |time_str: String| -> Result<chrono::NaiveTime, rusqlite::Error> {
+            time_str.parse().map_err(|_| {
+                rusqlite::Error::FromSqlConversionFailure(
+                    0,
+                    rusqlite::types::Type::Text,
+                    Box::new(std::io::Error::new(
+                        std::io::ErrorKind::InvalidData,
+                        "Invalid time format",
+                    )),
+                )
+            })
+        };
+
+        while let Some(row) = rows.next()? {
+            let fajr = parse_time(row.get::<_, String>(1)?)?;
+            let dhuhr = parse_time(row.get::<_, String>(2)?)?;
+            let asr = parse_time(row.get::<_, String>(3)?)?;
+            let maghrib = parse_time(row.get::<_, String>(4)?)?;
+            let isha = parse_time(row.get::<_, String>(5)?)?;
+
+            prayers_times.push(PrayersTimes {
+                fajr,
+                dhuhr,
+                asr,
+                maghrib,
+                isha,
+            });
+
+            // Move to the next day
+            current_date = current_date.checked_add_days(chrono::Days::new(1)).unwrap();
+        }
+
+        Ok(PrayersTimesStuck {
+            from: *date,
+            to: date_to,
+            prayers_times,
+        })
+    }
 }

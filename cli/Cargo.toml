@@ -9,6 +9,10 @@ repository = "https://github.com/abdelkadouss/neda"
 keywords = ["islam", "prayer", "adhan", "salat"]
 categories = ["command-line-utilities", "multimedia::audio"]
 
+[[bin]]
+name = "neda"
+path = "src/main.rs"
+
 [dependencies]
 neda-lib = { path = "../lib" }
 clap = { workspace = true }

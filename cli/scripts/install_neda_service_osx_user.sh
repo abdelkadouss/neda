@@ -25,7 +25,6 @@ cat > "$PLIST_PATH" <<EOF
     <key>ProgramArguments</key>
     <array>
         <string>$(command -v neda)</string>
-        <string>start</string>
     </array>
     <key>RunAtLoad</key>
     <true/>
