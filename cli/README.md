@@ -22,13 +22,7 @@ todo: installing via `nix package manager`.
 ## Usage
 
 ```sh
-neda --help # print help message
-
-neda list #<options> # list prayer times (default: today)
-
-neda show #<options> # equal to list command
-
-neda start # start adhan and notification service in the background
+neda # and the adhan service should be running...🌻
 
 ```
 
