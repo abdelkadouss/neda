@@ -1,6 +1,6 @@
 [package]
 name = "neda-cli"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2024"
 authors = ["abdelkadous <development.abdelkadous@gmail.com>"]
 description = "a siple adhan cli app written in rust"
