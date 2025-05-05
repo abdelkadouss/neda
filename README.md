@@ -4,7 +4,7 @@
 
 Neda is an open source app Rust library for getting prayer times from multiple providers.
 is good to make you own prayer times app really quickly and easily incha'Allah.
-it is a part of [Neda](https://github.com/abdelkadess/neda) project a free and open source cross platform - insha'Allah - salat (prayers) times app and library.
+it is a part of [Neda](https://github.com/abdelkadouss/neda) project a free and open source cross platform - insha'Allah - salat (prayers) times app and library.
 
 ## Installation
 

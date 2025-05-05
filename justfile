@@ -12,7 +12,7 @@ _default:
 run bin *args:
   #!/usr/bin/env nu
   if "{{bin}}" == "cli" {
-    cargo run --bin neda-cli {{args}}
+    cargo run --bin neda {{args}}
   } else {
     cargo run --bin {{bin}} {{args}}
   }
@@ -31,10 +31,10 @@ test *opt:
   }
 
 # watch crates the files changes and run the crate (default: neda-cli)
-watch crate = "neda-cli" *args:
+watch crate = "neda" *args:
   #!/usr/bin/env nu
   if "{{crate}}" == "cli" {
-    watchexec -w cli -w Cargo.toml just run neda-cli {{args}}
+    watchexec -w cli -w Cargo.toml -r just run neda {{args}}
   } else {
-    watchexec -w cli -w lib -w Cargo.toml just run {{crate}} {{args}}
+    watchexec -w cli -w lib -w Cargo.toml -r just run {{crate}} {{args}}
   }

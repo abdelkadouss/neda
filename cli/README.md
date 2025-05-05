@@ -1,7 +1,7 @@
 <div align="center"> بسم الله الرحمن الرحيم </div> 
 
 # WORNING
-🚧 this app is still in development and is not ready for use yet. 🚧
+🚧 this app is still in development and is not really stable yet 🚧
 
 # Neda
 
