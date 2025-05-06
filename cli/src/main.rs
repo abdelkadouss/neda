@@ -19,7 +19,7 @@ fn main() {
     let config = Config::load().unwrap();
 
     loop {
-        let db_path = &"local.db".to_string();
+        let db_path = &config.db.path;
         let mut db = Err(Error::InvalidQuery);
         let mut attempt = 0;
         while attempt < 3 && db.is_err() {
