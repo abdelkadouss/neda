@@ -1,11 +1,11 @@
 use chrono::{Datelike, NaiveDate, NaiveTime, Timelike};
 use neda_lib::{
+    client::config_reader::Config,
     core::{
         config::{Config as apiConfig, GetType},
         prayers_times::PrayersTimes,
         providers::Provider,
     },
-    client::config_reader::Config,
     providers::aladhan::AladhanProvider,
     sound::Adhan,
     storage::{Error, prayers_times_db::PrayersTimesDB},
@@ -19,7 +19,7 @@ fn main() {
     let config = Config::load().unwrap();
 
     loop {
-        let db_path = &config.db.path;
+        let db_path = &"local.db".to_string();
         let mut db = Err(Error::InvalidQuery);
         let mut attempt = 0;
         while attempt < 3 && db.is_err() {
@@ -32,11 +32,30 @@ fn main() {
                 let today_prayers_time = get_today_prayers_time_from_db(&ready_db);
                 match today_prayers_time {
                     Ok(today_prayers_time) => {
-                        let next_prayers_time =
+                        let next_prayer_time =
                             calculate_next_prayers_time(&ready_db, &today_prayers_time);
-                        sleep(next_prayers_time);
-                        let adhan = Adhan::new(config.adhan.file.clone());
-                        adhan.play();
+
+                        if next_prayer_time.is_none() {
+                            eprintln!("No next prayer time found");
+                            // Add a small delay before retrying to prevent CPU spinning
+                            sleep(Duration::from_secs(60 * 5));
+                            continue;
+                        }
+
+                        let next_prayer_time = next_prayer_time.unwrap();
+
+                        loop {
+                            let now = chrono::Local::now().time();
+                            let now = NaiveTime::from_hms_opt(now.hour(), now.minute(), 0).unwrap();
+
+                            if next_prayer_time.lt(&now) || next_prayer_time.eq(&now) {
+                                let adhan = Adhan::new(config.adhan.file.clone());
+                                adhan.play();
+                                break;
+                            }
+
+                            sleep(Duration::from_secs(60));
+                        }
                         // Continue the loop instead of recursive call
                     }
                     Err(_) => {
@@ -85,7 +104,10 @@ fn update_db(db: &mut PrayersTimesDB, global_config: &Config) -> Result<(), Erro
     Ok(())
 }
 
-fn calculate_next_prayers_time(db: &PrayersTimesDB, today_prayers_time: &PrayersTimes) -> Duration {
+fn calculate_next_prayers_time(
+    db: &PrayersTimesDB,
+    today_prayers_time: &PrayersTimes,
+) -> Option<NaiveTime> {
     let now = chrono::Local::now().time();
 
     // Create an array of prayer times and find the next prayer time
@@ -103,33 +125,25 @@ fn calculate_next_prayers_time(db: &PrayersTimesDB, today_prayers_time: &Prayers
 
     // If there's a prayer time today, calculate duration until that time
     if let Some(next_time) = next_prayer {
-        let seconds_until = (next_time - now).num_seconds();
-        Duration::from_secs(seconds_until.max(0) as u64)
+        Some(next_time)
     } else {
         // If no more prayers today, calculate time until tomorrow's Fajr
         // Create a new date for tomorrow
         let today = chrono::Local::now();
         let tomorrow = NaiveDate::from_ymd_opt(today.year(), today.month(), today.day())
             .unwrap()
-            .succ();
+            .succ_opt()
+            .unwrap();
 
         // Get tomorrow's prayer times
-        let tomorrow_prayers = match get_prayers_time_for_date(db, &tomorrow) {
-            Ok(prayers) => prayers,
+        match get_prayers_time_for_date(db, &tomorrow) {
+            Ok(prayers) => Some(prayers.fajr),
             Err(_) => {
                 // If we can't get tomorrow's prayers, use a fallback time
                 // This is a placeholder. In a real app, you might want to handle this differently
-                return Duration::from_secs(6 * 60 * 60); // Wait 6 hours and try again
+                // sleep for a minites and try again
+                None
             }
-        };
-
-        // Calculate duration from now until tomorrow's Fajr
-        let seconds_until_midnight =
-            (NaiveTime::from_hms_opt(23, 59, 59).unwrap() - now).num_seconds() + 1;
-        let seconds_from_midnight_to_fajr = tomorrow_prayers.fajr.num_seconds_from_midnight();
-
-        Duration::from_secs(
-            (seconds_until_midnight + (seconds_from_midnight_to_fajr as i64)).max(0) as u64,
-        )
+        }
     }
 }
