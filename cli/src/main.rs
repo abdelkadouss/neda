@@ -1,4 +1,4 @@
-use chrono::{Datelike, NaiveDate, NaiveTime, Timelike};
+use chrono::{Datelike, NaiveDate, NaiveTime, TimeDelta, Timelike};
 use neda_lib::{
     client::config_reader::Config,
     core::{
@@ -49,6 +49,10 @@ fn main() {
                             let now = NaiveTime::from_hms_opt(now.hour(), now.minute(), 0).unwrap();
 
                             if next_prayer_time.lt(&now) || next_prayer_time.eq(&now) {
+                                if (now - next_prayer_time).abs() > TimeDelta::seconds(300) {
+                                    break;
+                                }
+
                                 let adhan = Adhan::new(config.adhan.file.clone());
                                 adhan.play();
                                 break;
